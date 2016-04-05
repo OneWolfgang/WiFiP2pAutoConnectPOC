@@ -2,7 +2,6 @@ package com.cmc.wifiautoconnectpoc;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.net.wifi.p2p.WifiP2pDevice;
@@ -14,8 +13,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.cmc.wifiautoconnectpoc.wifiP2P.WiFiP2pReceiver;
-import com.cmc.wifiautoconnectpoc.wifiP2P.WifiP2pServiceDiscoveryHelper;
+import com.cmc.wifiautoconnectpoc.wifi.p2p.WiFiP2pReceiver;
+import com.cmc.wifiautoconnectpoc.wifi.p2p.WifiP2pServiceDiscoveryHelper;
 
 import java.util.Iterator;
 import java.util.Map;

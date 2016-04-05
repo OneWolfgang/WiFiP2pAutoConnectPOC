@@ -1,4 +1,4 @@
-package com.cmc.wifiautoconnectpoc.wifiP2P;
+package com.cmc.wifiautoconnectpoc.wifi.p2p;
 
 import android.annotation.TargetApi;
 import android.net.wifi.p2p.WifiP2pDevice;
