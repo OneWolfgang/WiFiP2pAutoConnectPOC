@@ -1,5 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="#000">
+    <RelativeLayout
+        android:id="@+id/relay_device_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/txtV_device_info_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/device_info_header"
+            android:textColor="@color/text_main"
+            android:textSize="@dimen/text_size_header"/>
+        <LinearLayout
+            android:id="@+id/linlay_device_info"
+            android:layout_below="@id/txtV_device_info_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/txtV_device_info"
+                android:textColor="@color/text_main"
+                android:textSize="@dimen/text_size_main"
+                android:text="device_info"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_below="@id/linlay_device_info"
+            android:id="@+id/txtV_self_wifip2p_info_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_header"
+            android:textColor="@color/text_main"
+            android:text="@string/wifip2p_self_info_header"/>
+        <LinearLayout
+            android:id="@+id/linlay_wifip2p_self_info"
+            android:layout_below="@id/txtV_self_wifip2p_info_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/txtV_wifip2p_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_main"
+                android:textColor="@color/text_main"
+                android:text="wifip2p_info"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/txtV_other_wifip2p_info_header"
+            android:layout_below="@id/linlay_wifip2p_self_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_header"
+            android:textColor="@color/text_main"
+            android:text="@string/wifip2p_other_info_header"/>
+        <LinearLayout
+            android:id="@+id/linlay_wifip2p_other_info"
+            android:layout_below="@id/txtV_other_wifip2p_info_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/txtV_wifip2p_info_other"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_main"
+                android:textColor="@color/text_main"
+                android:text="wifip2p_info_other"/>
+        </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

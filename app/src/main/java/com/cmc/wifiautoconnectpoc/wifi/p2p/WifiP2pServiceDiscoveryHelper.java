@@ -24,6 +24,7 @@ public class WifiP2pServiceDiscoveryHelper {
     private final String TAG = "WifiP2pServiceDiscoveryHelper";
 
     private final String KEY_IP = "ip";
+    private WifiP2pDnsSdServiceRequest mServiceRequest;
 
     public WifiP2pServiceDiscoveryHelper(WifiP2pManager manager, WifiP2pManager.Channel channel, WifiP2pServiceDiscoveryListener listener){
         this.mManager = manager;
@@ -78,8 +79,8 @@ public class WifiP2pServiceDiscoveryHelper {
         };
 
         mManager.setDnsSdResponseListeners(mChannel, servListener, txtListener);
-        WifiP2pDnsSdServiceRequest serviceRequest = WifiP2pDnsSdServiceRequest.newInstance();
-        mManager.addServiceRequest(mChannel, serviceRequest, new WifiP2pManager.ActionListener() {
+        mServiceRequest = WifiP2pDnsSdServiceRequest.newInstance();
+        mManager.addServiceRequest(mChannel, mServiceRequest, new WifiP2pManager.ActionListener() {
             @Override
             public void onSuccess() {
                 Log.d(TAG, "onSuccess (addServiceRequest)");

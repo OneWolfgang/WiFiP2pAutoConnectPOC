@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">WiFiAutoConnectPOC</string>
+    <string name="device_info_header">Device Info:</string>
+    <string name="model">Model:</string>
+    <string name="manufacturer">Manufacturer:</string>
+    <string name="wifip2p_self_info_header">WiFiP2P Info(self):</string>
+    <string name="wifip2p_other_info_header">WiFiP2P Info(other):</string>
 </resources>
