@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Build;
@@ -51,6 +52,9 @@ public class MainActivity extends Activity implements WiFiP2pReceiver.WifiP2pLis
     private TextView mTxtWiFiP2PInfoSelf;
     private TextView mTxtWiFiP2PInfoOther;
     private WifiP2pDevice mTargetDevice;
+    private TextView mTxtServiceInfo;
+    private TextView mTxtWiFiP2PConnectionInfo;
+    private TextView mTxtIsGroupOwner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +69,9 @@ public class MainActivity extends Activity implements WiFiP2pReceiver.WifiP2pLis
         mTxtDeviceInfo = (TextView)findViewById(R.id.txtV_device_info);
         mTxtWiFiP2PInfoSelf = (TextView)findViewById(R.id.txtV_wifip2p_info);
         mTxtWiFiP2PInfoOther = (TextView)findViewById(R.id.txtV_wifip2p_info_other);
+        mTxtServiceInfo = (TextView)findViewById(R.id.txtV_self_service_info);
+        mTxtWiFiP2PConnectionInfo = (TextView)findViewById(R.id.txtV_wifip2p_connection_info);
+        mTxtIsGroupOwner = (TextView)findViewById(R.id.txtV_is_group_owner);
 
         String manufacturer = Build.MANUFACTURER;
         String model = Build.MODEL;
@@ -73,6 +80,9 @@ public class MainActivity extends Activity implements WiFiP2pReceiver.WifiP2pLis
 
         mTxtWiFiP2PInfoSelf.setText("none");
         mTxtWiFiP2PInfoOther.setText("none");
+        mTxtServiceInfo.setText("unregistered");
+        mTxtWiFiP2PConnectionInfo.setText("not connected");
+        mTxtIsGroupOwner.setText("isGroupOwner: unknown");
     }
 
     @Override
@@ -98,6 +108,8 @@ public class MainActivity extends Activity implements WiFiP2pReceiver.WifiP2pLis
                 Log.d(TAG, "onOptionsItemSelected: case MENU_ITEM_REMOVE_HOTSPOT");
                 mWifiP2pReceiver.removeHotspot();
                 mTxtWiFiP2PInfoSelf.setText("none");
+                mTxtWiFiP2PConnectionInfo.setText("not connected");
+                mTxtServiceInfo.setText("unregistered");
                 break;
             }
             case MENU_ITEM_REGISTER_SERVICE:{
@@ -188,13 +200,34 @@ public class MainActivity extends Activity implements WiFiP2pReceiver.WifiP2pLis
     }
 
     @Override
-    public void onHotspotCreated(String ssid, String ipAdd, String password) {
+    public void onHotspotCreated(String ssid, String ipAdd, String password, boolean isGroupOwner, WifiP2pDevice groupOwner) {
         Log.d(TAG, "onHotspotCreated: ssid= " + ssid + ", ip = " + ipAdd + ", pass = " + password);
         mSSID = ssid;
         mIpAddress = ipAdd;
         mPassword = password;
 
         mTxtWiFiP2PInfoSelf.setText(String.format("SSID: %s, IP: %s, Password: %s", mSSID, mIpAddress, mPassword));
+
+        if(isGroupOwner) {
+            Log.d(TAG, "hotSpotCreated, i'm the group owner , auto-registering service...");
+            mTxtWiFiP2PConnectionInfo.setText("Group formed (i'm owner), registering service...");
+            mWifiP2pServiceDiscoveryHelper.startRegistration(mIpAddress, mSSID, mPassword);
+            mTxtIsGroupOwner.setText("isGroupOwner: true");
+            mTxtIsGroupOwner.setTextColor(Color.GREEN);
+        }else{
+            Log.d(TAG, "hotSpotCreated, i'm the NOT the group owner , connected to other device!");
+            mTxtIsGroupOwner.setText("isGroupOwner: false");
+            mTxtIsGroupOwner.setTextColor(Color.RED);
+            StringBuilder sb = new StringBuilder();
+            sb.append("connected to: ");
+            if(groupOwner != null){
+                sb.append("GO: " + groupOwner.deviceName + ", ");
+                sb.append("GO Address: " + groupOwner.deviceAddress + ", ");
+                sb.append("GO Prim. type: " + groupOwner.primaryDeviceType + ", ");
+                sb.append("GO Sec. type: " + groupOwner.secondaryDeviceType + ", ");
+            }
+            mTxtWiFiP2PConnectionInfo.setText(sb.toString());
+        }
     }
 
     @Override
@@ -239,11 +272,14 @@ public class MainActivity extends Activity implements WiFiP2pReceiver.WifiP2pLis
     @Override
     public void onServiceAddSuccess() {
         Log.d(TAG, "onServiceAddSuccess");
+        mTxtServiceInfo.setText("registered successfully!");
+        mTxtWiFiP2PConnectionInfo.setText("service registered!");
     }
 
     @Override
     public void onServiceAddFailed(int reason) {
         Log.d(TAG, "onServiceAddFailed: reason = " + reason);
+        mTxtServiceInfo.setText("unable to register");
     }
 
     @Override

@@ -135,7 +135,7 @@ public class WiFiP2pReceiver extends BroadcastReceiver implements WifiP2pManager
             String ssid = group.getNetworkName();
             String password = group.getPassphrase();
             if (mListener != null) {
-                mListener.onHotspotCreated(ssid, mDeviceIP, password);
+                mListener.onHotspotCreated(ssid, mDeviceIP, password, group.isGroupOwner(), group.getOwner());
             }
         } catch (Exception e) {
             mManager.removeGroup(mChannel, null);
@@ -148,6 +148,6 @@ public class WiFiP2pReceiver extends BroadcastReceiver implements WifiP2pManager
     public interface WifiP2pListener {
         void onHotspotError(int reason);
         void setP2pEnabled(boolean isEnabled);
-        void onHotspotCreated(String ssid, String ipAdd, String password);
+        void onHotspotCreated(String ssid, String ipAdd, String password, boolean isGroupOwner, WifiP2pDevice groupOwner);
     }
 }

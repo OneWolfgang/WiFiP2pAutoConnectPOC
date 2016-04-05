@@ -5,4 +5,6 @@
     <string name="manufacturer">Manufacturer:</string>
     <string name="wifip2p_self_info_header">WiFiP2P Info(self):</string>
     <string name="wifip2p_other_info_header">WiFiP2P Info(other):</string>
+    <string name="self_service_registered_header">WP2P Service Info(self):</string>
+    <string name="wifip2p_connection_info">WiFiP2P connection:</string>
 </resources>
